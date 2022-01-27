@@ -109,9 +109,15 @@ async def callback(event):
         t3_4=int(get_time(o[4]))
         t3_5=int(get_time(o[5]))
         t6=int(get_time(o[-1]))
-        prccs = await Bot.send_message(event.chat_id, f"🔹Name : {title}\n\n🟠status : working")
-
+        if not os.path.exists(au2_1):
+            async with Bot.conversation(event.chat_id) as conv:
+                ask = await conv.send_message('فایل 2.1 یافت نشد. خودت بفرستش')
+                ans = await conv.get_response()
+                au2_1 = Bot.download_media(ans.media)
+                ask.delete()
+                ans.delete()
         os.system(f'ffmpeg -i "{au2_1}" -i 2.2.mp3 -y 2.mp3')
+        prccs = await Bot.send_message(event.chat_id, f"🔹Name : {title}\n\n🟠status : working")
         if len(o) == 7:
             os.system(f'ffmpeg -i "{input}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3_1}|{t3_1}[d]; [3]adelay={t3_2}|{t3_2}[e]; [3]adelay={t3_3}|{t3_3}[f]; [3]adelay={t3_4}|{t3_4}[g]; [3]adelay={t3_5}|{t3_5}[h]; [4]adelay={t6}|{t6}[i]; [0][b][c][d][e][f][g][h][i]amix=9" -c:a aac -b:a 125k -y "{tmp}{aac}"')  
         elif len(o) == 8:
