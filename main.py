@@ -1,8 +1,10 @@
-import os, time, glob, datetime
+import os, time, glob, datetime, shutil
 import PTN
-import shutil
 from telethon import TelegramClient, events, Button
+import keyboard as kb
+import pygetwindow as gw
 
+win = gw.getActiveWindow()
 
 BOT_TOKEN = " "
 API_ID = " "
