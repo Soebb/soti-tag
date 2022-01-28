@@ -1,2 +1,4 @@
 telethon
+keyboard
+pygetwindow
 parse-torrent-name
