@@ -41,6 +41,23 @@ def get_time(t2):
         t = int(t3)*1000 + int(t2[9:][:3])
     return str(t)
 
+@Bot.on(events.NewMessage(incoming=True, pattern="^/cancel"))
+async def to_cancel(event):
+    await event.reply('canceled.')
+    exit()
+
+@Bot.on(events.NewMessage(incoming=True, pattern="^/stop"))
+async def to_stop(event):
+    win.activate()
+    kb.press_and_release('pause')
+    await event.reply('stoped. to resume send /resume')
+
+@Bot.on(events.NewMessage(incoming=True, pattern="^/resume"))
+async def to_resume(event):
+    win.activate()
+    kb.press_and_release('enter')
+    await event.reply('resumed.')
+
 @Bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def stt(event):
     keyboard = []
@@ -117,7 +134,7 @@ async def callback(event):
                 ask.delete()
                 ans.delete()
         os.system(f'ffmpeg -i "{au2_1}" -i 2.2.mp3 -y 2.mp3')
-        prccs = await Bot.send_message(event.chat_id, f"🔹Name : {title}\n\n🟠status : working")
+        prccs = await Bot.send_message(event.chat_id, f"🔹Name : {title}\n\n🟠status : working\n\nFor cancel send /cancel\nFor stop send /stop")
         if len(o) == 7:
             os.system(f'ffmpeg -i "{input}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3_1}|{t3_1}[d]; [3]adelay={t3_2}|{t3_2}[e]; [3]adelay={t3_3}|{t3_3}[f]; [3]adelay={t3_4}|{t3_4}[g]; [3]adelay={t3_5}|{t3_5}[h]; [4]adelay={t6}|{t6}[i]; [0][b][c][d][e][f][g][h][i]amix=9" -c:a aac -b:a 125k -y "{tmp}{aac}"')  
         elif len(o) == 8:
