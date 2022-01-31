@@ -46,7 +46,7 @@ def get_time(t2):
 @Bot.on(events.NewMessage(incoming=True, pattern="^/cancel"))
 async def to_cancel(event):
     await event.reply('canceled.')
-    exit()
+    exit(0)
 
 @Bot.on(events.NewMessage(incoming=True, pattern="^/stop"))
 async def to_stop(event):
